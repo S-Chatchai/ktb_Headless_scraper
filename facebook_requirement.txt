@@ -1,0 +1,19 @@
+ตรวจสอบเวอร์ชัน:
+
+node -v
+npm -v
+
+ถ้ายังไม่มี → ดาวน์โหลด Node.js LTS
+
+npm init -y
+
+npm install puppeteer axios dotenv nodemailer @google/generative-ai
+
+
+ตั้งค่า .env
+
+สร้างไฟล์ .env ในโฟลเดอร์เดียวกับสคริปต์:
+
+GEMINI_API_KEY=ใส่ API Key ของคุณ
+GMAIL_USER=your.email@gmail.com
+GMAIL_PASS=your_app_password
