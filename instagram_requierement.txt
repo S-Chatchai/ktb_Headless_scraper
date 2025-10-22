@@ -1,1 +1,6 @@
 npm install puppeteer fs path child_process dotenv nodemailer @google/generative-ai node-fetch
+
+
+python environment
+pip install yt-dlp
+
