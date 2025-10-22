@@ -18,6 +18,14 @@ GEMINI_API_KEY=ใส่ API Key ของคุณ
 GMAIL_USER=your.email@gmail.com
 GMAIL_PASS=your_app_password
 
-python environment
+
+python environment(ทำครั้งเดียว)
+create python environment
+python -m venv venv
+
+(ถ้าต้องการทดสอบต้องเข้า venv ตลอด)
+open venv environment
+venv\Scripts\activate
+
 pip install yt-dlp
 
