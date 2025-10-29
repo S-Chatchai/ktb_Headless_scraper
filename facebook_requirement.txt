@@ -1,14 +1,26 @@
-ตรวจสอบเวอร์ชัน:
+-install vscode
+
+-install python 
+https://www.python.org/downloads/
+
+-install nodejs
+https://nodejs.org/dist/v24.11.0/node-v24.11.0-win-x64.zip
 
 node -v
 npm -v
 
-ถ้ายังไม่มี → ดาวน์โหลด Node.js LTS
-
 npm init -y
-
 npm install puppeteer axios dotenv nodemailer @google/generative-ai
 
+python environment(ทำครั้งเดียว)
+create python environment
+-python -m venv venv
+
+(ถ้าต้องการทดสอบต้องเข้า venv ตลอด)
+open venv environment
+-venv\Scripts\activate
+
+pip install yt-dlp
 
 ตั้งค่า .env
 
@@ -19,13 +31,5 @@ GMAIL_USER=your.email@gmail.com
 GMAIL_PASS=your_app_password
 
 
-python environment(ทำครั้งเดียว)
-create python environment
-python -m venv venv
 
-(ถ้าต้องการทดสอบต้องเข้า venv ตลอด)
-open venv environment
-venv\Scripts\activate
-
-pip install yt-dlp
 
