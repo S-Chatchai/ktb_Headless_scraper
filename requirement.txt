@@ -10,7 +10,7 @@ node -v
 npm -v
 
 npm init -y
-npm install puppeteer axios dotenv nodemailer @google/generative-ai node-fetch
+npm install puppeteer axios dotenv nodemailer @google/generative-ai node-fetch fs path child_process
 
 python environment(ทำครั้งเดียว)
 create python environment
