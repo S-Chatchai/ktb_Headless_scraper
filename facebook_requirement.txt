@@ -23,9 +23,9 @@ open venv environment
 pip install yt-dlp
 
 ตั้งค่า .env
+-สร้าง file ใหม่ชื่อ .env
 
-สร้างไฟล์ .env ในโฟลเดอร์เดียวกับสคริปต์:
-
+-ใส่ข้อมูลด้านล่างเข้าไปใน .env
 GEMINI_API_KEY=ใส่ API Key ของคุณ
 GMAIL_USER=your.email@gmail.com
 GMAIL_PASS=your_app_password
