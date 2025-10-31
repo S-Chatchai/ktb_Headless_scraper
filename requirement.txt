@@ -9,16 +9,11 @@ https://nodejs.org/dist/v24.11.0/node-v24.11.0-win-x64.zip
 node -v
 npm -v
 
-npm init -y
-npm install puppeteer axios dotenv nodemailer @google/generative-ai node-fetch fs path child_process
-
 python environment(ทำครั้งเดียว)
-create python environment
--python -m venv venv
+python -m venv venv
 
 (ถ้าต้องการทดสอบต้องเข้า venv ตลอด)
-open venv environment
--venv\Scripts\activate
+venv\Scripts\activate
 
 pip install yt-dlp
 
