@@ -119,10 +119,17 @@ async function downloadMedia(media, fileName, url) {
     if (media.type === "video") {
         return new Promise((resolve, reject) => {
             const customVideoName = fileName.replace(".txt", ".mp4");
-            const pythonProcess = spawn("python", ["download_instagram_video.py", url, customVideoName]);
+            
+            // 🚨 FIX: Explicitly specify the path to the Python executable inside your venv
+            const pythonExecutablePath = "D:\\Users\\10000930\\Desktop\\ktb_Headless_scraper-main\\venv\\Scripts\\python.exe"; 
+            
+            const args = ["download_instagram_video.py", url, customVideoName];
+            
+            // 🚨 Use the full path as the command
+            const pythonProcess = spawn(pythonExecutablePath, args);
 
-            pythonProcess.stdout.on("data", (data) => console.log(`${data}`));
-            pythonProcess.stderr.on("data", (data) => console.error(`${data}`));
+            pythonProcess.stdout.on("data", (data) => console.log(`[Python STDOUT]: ${data}`));
+            pythonProcess.stderr.on("data", (data) => console.error(`[Python STDERR]: ${data}`));
 
             pythonProcess.on("close", (code) => {
                 if (code === 0) {
@@ -133,11 +140,18 @@ async function downloadMedia(media, fileName, url) {
                     reject(`Python process exited with code ${code}`);
                 }
             });
+            
+            pythonProcess.on('error', (err) => {
+                console.error(`❌ Failed to start Python process: ${err.message}`);
+                reject(err);
+            });
         });
     }
 
     return null;
 }
+// The rest of the script remains the same
+
 
 // --- Call Gemini to analyze caption + media with key rotation and retry logic ---
 async function analyzeWithGemini(caption, mediaPath, mediaType) {
@@ -281,12 +295,18 @@ async function sendEmail(post, geminiResult, mediaPath, customOptions = {}) {
 
 // --- Scrape newest posts (MODIFIED logic for NOT COMPLY email) ---
 async function scrapeNewestPosts(count = 5, delaySeconds = 30) {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
     console.log("🌐 Going to Instagram page...");
     await page.goto("https://www.instagram.com/krungthai_care/", { waitUntil: "networkidle2" });
-    await page.waitForSelector("article a");
+    try {
+            await page.waitForSelector("article a", { timeout: 30000 }); // อาจลด timeout เหลือ 15 วิ
+        } catch (error) {
+            await browser.close();
+            console.error("❌ ERROR: ลืมเปลี่ยนเป็นเน็ตส่วนตัวหรือป่าว?");
+    
+        }
 
     const postLinks = await page.$$eval("article a", links => links.map(a => a.href));
     const candidateLinks = postLinks.slice(0, count);
@@ -376,5 +396,5 @@ async function cleanupFiles() {
 
 // --- Run job ---
 scrapeNewestPosts(3, 5)
-    // .then(() => cleanupFiles())
-    // .catch(err => console.error("❌ Error:", err));
+    .then(() => cleanupFiles())
+    .catch(err => console.error("❌ Error:", err));
