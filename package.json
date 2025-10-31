@@ -1,0 +1,21 @@
+{
+  "name": "test_new_install_scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "insta10_video_working_delete.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.13.1",
+    "dotenv": "^17.2.3",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^7.0.10",
+    "puppeteer": "^24.26.1"
+  }
+}
