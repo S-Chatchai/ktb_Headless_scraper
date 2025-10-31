@@ -10,6 +10,12 @@ https://nodejs.org/dist/v24.11.0/node-v24.11.0-win-x64.zip
 node -v
 npm -v
 
+npm install
+
+C:\Users\10000930\AppData\Local\Programs\Python\Python310\
+C:\Users\10000930\AppData\Local\Programs\Python\Python310\Scripts\
+
+
 python environment(ทำครั้งเดียว)
 python -m venv venv
 
