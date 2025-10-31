@@ -118,21 +118,28 @@ async function scrapeFBPost(browser, url) {
 }
 
 async function downloadReel(postUrl) {
+    // 💡 แก้ไข: ระบุพาธแบบเต็มไปยัง python.exe ภายใน venv ของคุณ
+    // **คุณต้องเปลี่ยน 'myvenv' และตรวจสอบพาธที่ถูกต้อง**
+    const VENV_PYTHON_PATH = path.join(__dirname, "venv", "Scripts", "python.exe");
+
     return new Promise((resolve, reject) => {
-        const pyProcess = spawn("python", [path.join(__dirname, "download_reel.py"), postUrl]);
+        // เปลี่ยน 'python' เป็น VENV_PYTHON_PATH
+        const pyProcess = spawn(VENV_PYTHON_PATH, [path.join(__dirname, "download_reel.py"), postUrl]);
+        
         let stdout = "", stderr = "";
         pyProcess.stdout.on("data", data => { stdout += data.toString(); });
         pyProcess.stderr.on("data", data => { stderr += data.toString(); });
         pyProcess.on("close", code => {
-            if (code !== 0) return reject(stderr);
-                // console.log("📌 Raw stdout from Python:", stdout);  // <-- เพิ่มตรงนี้
-
+            if (code !== 0) {
+                // เพิ่มการแสดงผล stderr เพื่อช่วยในการ Debug
+                return reject(`❌ Python script exited with code ${code}.\nStderr: ${stderr}\nStdout: ${stdout}`);
+            }
+            
             try {
-                // แยก JSON ล่าสุดจาก stdout
+                // ... (ส่วนโค้ดการแยก JSON เดิม)
                 const jsonStart = stdout.lastIndexOf("{");
                 const jsonEnd = stdout.lastIndexOf("}") + 1;
                 const jsonStr = stdout.slice(jsonStart, jsonEnd);
-                    // console.log("📌 Raw stdout from Python:", stdout);  // <-- เพิ่มตรงนี้
                 resolve(JSON.parse(jsonStr));
             } catch (err) {
                 reject("❌ Failed to parse JSON from Python: " + err + "\nOutput:\n" + stdout);
@@ -281,7 +288,7 @@ async function autoScroll(page, scrollDelay = 1500, maxScrolls = 5) {
 async function scrapeMultipleFBPosts() {
     let lastRecord = fs.existsSync(lastPostFile) ? JSON.parse(fs.readFileSync(lastPostFile, "utf-8")) : { processedPostIds: [] };
 
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     try {
         const page = await browser.newPage();
         await page.setViewport({ width: 1280, height: 800 });
